@@ -44,6 +44,6 @@
         <constructor-arg name="database" value="${redis.database:4}"/>
         <constructor-arg name="clientName" value="${server.appId}"/>
     </bean>
-    <bean class="com.webull.framework.redis.RedisCache"/>
+    <!-- <bean class="com.webull.framework.redis.RedisCache"/> -->
     <!-- /redis配置 -->
 </beans>
