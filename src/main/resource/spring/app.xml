@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		">
+
+	<context:property-placeholder location="
+			classpath*:/conf/*.properties,
+			classpath:app.properties" file-encoding="UTF-8"/>
+			
+	<context:component-scan base-package="com.redis">
+		<context:exclude-filter type="regex" expression=".*Test"/>
+		<context:exclude-filter type="regex" expression=".*\.mvc\..*"/>
+	</context:component-scan>
+	
+	<!-- redis配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.pool.maxTotal:200}"/>
+        <property name="maxIdle" value="${redis.pool.maxIdle:10}"/>
+        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis:1000}"/>
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow:true}"/>
+    </bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool"
+          destroy-method="close">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port:6379}"/>
+        <constructor-arg name="timeout" value="${redis.timeout:20}"/>
+        <constructor-arg name="password" value="#{ '${redis.pwd:}'?:null }"/>
+        <constructor-arg name="database" value="${redis.database:4}"/>
+        <constructor-arg name="clientName" value="${server.appId}"/>
+    </bean>
+    <bean class="com.webull.framework.redis.RedisCache"/>
+    <!-- /redis配置 -->
+</beans>
