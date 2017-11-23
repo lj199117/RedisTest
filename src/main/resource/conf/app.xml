@@ -38,12 +38,12 @@
           destroy-method="close">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg name="host" value="${redis.host}"/>
-        <constructor-arg name="port" value="${redis.port:6379}"/>
+        <constructor-arg name="port" value="${redis.port:6479}"/>
         <constructor-arg name="timeout" value="${redis.timeout:20}"/>
         <constructor-arg name="password" value="#{ '${redis.pwd:}'?:null }"/>
-        <constructor-arg name="database" value="${redis.database:4}"/>
+        <constructor-arg name="database" value="${redis.database:0}"/>
         <constructor-arg name="clientName" value="${server.appId}"/>
     </bean>
-    <!-- <bean class="com.webull.framework.redis.RedisCache"/> -->
+    <bean class="com.redis.cache.RedisCache"/>
     <!-- /redis配置 -->
 </beans>
