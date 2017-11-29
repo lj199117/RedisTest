@@ -5,6 +5,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.redis.service.PersonService;
 
+/**
+ * 測試AOP切面
+ * @author <a href="mailto:lijin@webull.com">李锦</a>
+ * @since 0.1.0
+ */
 public class Main {
 	public static void main(String[] args) {
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("/conf/app.xml");
