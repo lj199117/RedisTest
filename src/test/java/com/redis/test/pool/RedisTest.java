@@ -1,7 +1,6 @@
 package com.redis.test.pool;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.redis.annotation.LiJinLog;
 import com.redis.cache.RedisCache;
 import com.redis.test.junit.AbstractTest;
 
@@ -24,8 +24,8 @@ public class RedisTest extends AbstractTest {
 	private JedisPool jedisPool;
 	@Autowired
 	private RedisCache redisCache;
-
 	@Test
+	@LiJinLog
 	public void testJedisPool() {
 		try (Jedis jedis = jedisPool.getResource()){
 			jedis.set("webull-1", "webull-1");

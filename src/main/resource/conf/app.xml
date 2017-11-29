@@ -27,6 +27,9 @@
 		<context:exclude-filter type="regex" expression=".*\.mvc\..*"/>
 	</context:component-scan>
 	
+	<!-- 启动对@Aspectj的支持 true为cglib，false为jdk代理，为true的话，会导致拦截不了mybatis的mapper-->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+	
 	<!-- redis配置 -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="${redis.pool.maxTotal:200}"/>
