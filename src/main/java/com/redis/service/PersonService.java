@@ -12,14 +12,15 @@ public class PersonService {
 		System.out.println("add person " + personName);
 	}
 	
+	@LiJinLog
 	public boolean deletePerson(String personName) {
 		System.out.println("delete person " + personName) ;
 		return true;
 	}
-	@LiJinLog
+	
 	public void editPerson(String personName) {
 		System.out.println("edit person " + personName);
-		//throw new RuntimeException("edit person throw exception");
+		throw new RuntimeException("edit person throw exception");
 	}
 	
 }
