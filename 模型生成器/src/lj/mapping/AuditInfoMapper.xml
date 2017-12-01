@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lj.dao.AuditInfoMapper">
+  <resultMap id="BaseResultMap" type="lj.model.AuditInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="assignee_id" jdbcType="VARCHAR" property="assigneeId" />
+    <result column="sponsor_id" jdbcType="VARCHAR" property="sponsorId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="audit_suggestion" jdbcType="VARCHAR" property="auditSuggestion" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="audit_pass_time" jdbcType="TIMESTAMP" property="auditPassTime" />
+    <result column="audit_deny_time" jdbcType="TIMESTAMP" property="auditDenyTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, assignee_id, sponsor_id, type, status, audit_suggestion, remark, audit_pass_time, 
+    audit_deny_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wlc_audit_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wlc_audit_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="lj.model.AuditInfo">
+    insert into wlc_audit_info (id, title, assignee_id, 
+      sponsor_id, type, status, 
+      audit_suggestion, remark, audit_pass_time, 
+      audit_deny_time, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{assigneeId,jdbcType=VARCHAR}, 
+      #{sponsorId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{auditSuggestion,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{auditPassTime,jdbcType=TIMESTAMP}, 
+      #{auditDenyTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="lj.model.AuditInfo">
+    insert into wlc_audit_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="assigneeId != null">
+        assignee_id,
+      </if>
+      <if test="sponsorId != null">
+        sponsor_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="auditSuggestion != null">
+        audit_suggestion,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="auditPassTime != null">
+        audit_pass_time,
+      </if>
+      <if test="auditDenyTime != null">
+        audit_deny_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="assigneeId != null">
+        #{assigneeId,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsorId != null">
+        #{sponsorId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="auditSuggestion != null">
+        #{auditSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditPassTime != null">
+        #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditDenyTime != null">
+        #{auditDenyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="lj.model.AuditInfo">
+    update wlc_audit_info
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="assigneeId != null">
+        assignee_id = #{assigneeId,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsorId != null">
+        sponsor_id = #{sponsorId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="auditSuggestion != null">
+        audit_suggestion = #{auditSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditPassTime != null">
+        audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditDenyTime != null">
+        audit_deny_time = #{auditDenyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="lj.model.AuditInfo">
+    update wlc_audit_info
+    set title = #{title,jdbcType=VARCHAR},
+      assignee_id = #{assigneeId,jdbcType=VARCHAR},
+      sponsor_id = #{sponsorId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      audit_suggestion = #{auditSuggestion,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      audit_deny_time = #{auditDenyTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
