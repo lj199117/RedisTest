@@ -37,7 +37,7 @@
         <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis:1000}"/>
         <property name="testOnBorrow" value="${redis.pool.testOnBorrow:true}"/>
     </bean>
-    <bean id="jedisPool" class="redis.clients.jedis.JedisPool"
+    <!-- <bean id="jedisPool" class="redis.clients.jedis.JedisPool"
           destroy-method="close">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg name="host" value="${redis.host}"/>
@@ -45,6 +45,16 @@
         <constructor-arg name="timeout" value="${redis.timeout:20}"/>
         <constructor-arg name="password" value="#{ '${redis.pwd:}'?:null }"/>
         <constructor-arg name="database" value="${redis.database:0}"/>
+        <constructor-arg name="clientName" value="${server.appId}"/>
+    </bean> -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool" destroy-method="close">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+        <constructor-arg name="masterName" value="${sentinel.masterName}"></constructor-arg>
+        <constructor-arg name="sentinels" value="#{ T(com.redis.cache.Utils).asSet('${sentinel.servers}') }"></constructor-arg>
+        <constructor-arg name="connectionTimeout" value="${sentinel.connectionTimeout:5000}"/>
+        <constructor-arg name="soTimeout" value="${sentinel.soTimeout:5000}"/>
+        <constructor-arg name="password" value="#{ '${sentinel.pwd:}'?:null }"/>
+        <constructor-arg name="database" value="${sentinel.database:1}"/>
         <constructor-arg name="clientName" value="${server.appId}"/>
     </bean>
     <bean class="com.redis.cache.RedisCache"/>

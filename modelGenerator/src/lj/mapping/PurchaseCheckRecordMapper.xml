@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lj.dao.PurchaseCheckRecordMapper">
+  <resultMap id="BaseResultMap" type="lj.model.PurchaseCheckRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="trans_id" jdbcType="VARCHAR" property="transId" />
+    <result column="inner_item_id" jdbcType="VARCHAR" property="innerItemId" />
+    <result column="third_item_id" jdbcType="VARCHAR" property="thirdItemId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, trans_id, inner_item_id, third_item_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wlpc_check_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wlpc_check_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="lj.model.PurchaseCheckRecord">
+    insert into wlpc_check_record (id, user_id, trans_id, 
+      inner_item_id, third_item_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{transId,jdbcType=VARCHAR}, 
+      #{innerItemId,jdbcType=VARCHAR}, #{thirdItemId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="lj.model.PurchaseCheckRecord">
+    insert into wlpc_check_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="transId != null">
+        trans_id,
+      </if>
+      <if test="innerItemId != null">
+        inner_item_id,
+      </if>
+      <if test="thirdItemId != null">
+        third_item_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="transId != null">
+        #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="innerItemId != null">
+        #{innerItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdItemId != null">
+        #{thirdItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="lj.model.PurchaseCheckRecord">
+    update wlpc_check_record
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="transId != null">
+        trans_id = #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="innerItemId != null">
+        inner_item_id = #{innerItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdItemId != null">
+        third_item_id = #{thirdItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="lj.model.PurchaseCheckRecord">
+    update wlpc_check_record
+    set user_id = #{userId,jdbcType=INTEGER},
+      trans_id = #{transId,jdbcType=VARCHAR},
+      inner_item_id = #{innerItemId,jdbcType=VARCHAR},
+      third_item_id = #{thirdItemId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

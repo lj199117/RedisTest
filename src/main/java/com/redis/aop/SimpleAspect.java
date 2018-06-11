@@ -51,6 +51,6 @@ public class SimpleAspect {
 
 	@AfterThrowing(pointcut = "pointCut()", throwing = "error")
 	public void afterThrowing(JoinPoint jp, Throwable error) {
-		System.out.println("error:" + error);
+		System.out.println("error SimpleAspect = :" + error);
 	}
 }
