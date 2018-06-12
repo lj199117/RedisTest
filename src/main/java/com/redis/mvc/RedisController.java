@@ -17,8 +17,9 @@ public class RedisController {
 				String val = "key?" + i.incrementAndGet();
 				redisSvc.set("key", val);
 				System.out.println(val);
+
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(10000);
 				} catch (Exception e) {}
 			}
 		});
