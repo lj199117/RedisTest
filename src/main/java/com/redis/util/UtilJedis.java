@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.fasterxml.jackson.databind.JavaType;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -467,6 +470,14 @@ public class UtilJedis {
 			return jedis.zrangeWithScores(key, start, end);
 		}
 	}
+	public static Set<Tuple> zrevrangeByScoreWithScores(JedisPool pool, String key, final double max,
+		      final double min, final int offset, final int count) {
+		if (key == null) return new HashSet<>();
+		
+		try (Jedis jedis = pool.getResource()) {
+			return jedis.zrevrangeByScoreWithScores(key, max, min, offset, count);
+		}
+	}
 
 	public static <T> List<T> zrangeByScore(JedisPool pool, String key, String min, String max, Class<T> clazz) {
 		Set<String> set = new HashSet<String>();
@@ -477,6 +488,44 @@ public class UtilJedis {
 		List<T> result = new ArrayList<T>();
 		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
 			result.add(UtilJson.readValue(iter.next(), clazz));
+		}
+		return result;
+	}
+	
+	public static <T> List<T> zrangeByScore(JedisPool pool, String key, double min, double max, int offset, int limit, Class<T> clazz) {
+		Set<String> set = new HashSet<String>();
+		try (Jedis jedis = pool.getResource()) {
+			set = jedis.zrangeByScore(key, min, max, offset, limit);
+		}
+		if (set.size() == 0) return null;
+		List<T> result = new ArrayList<T>();
+		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
+			result.add(UtilJson.readValue(iter.next(), clazz));
+		}
+		return result;
+	}
+	public static <T> List<T> zrevRangeByScore(JedisPool pool, String key, double min, double max, int offset, int limit, Class<T> clazz) {
+		Set<String> set = new HashSet<String>();
+		try (Jedis jedis = pool.getResource()) {
+			set = jedis.zrevrangeByScore(key, min, max, offset, limit);
+		}
+		if (set.size() == 0) return null;
+		List<T> result = new ArrayList<T>();
+		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
+			result.add(UtilJson.readValue(iter.next(), clazz));
+		}
+		return result;
+	}
+	
+	public static <T> List<T> zrangeByScore(JedisPool pool, String key, double min, double max, int offset, int limit, JavaType type) {
+		Set<String> set = new HashSet<String>();
+		try (Jedis jedis = pool.getResource()) {
+			set = jedis.zrangeByScore(key, min, max, offset, limit);
+		}
+		if (set.size() == 0) return null;
+		List<T> result = new ArrayList<T>();
+		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
+			result.add(UtilJson.readValue(iter.next(), type));
 		}
 		return result;
 	}

@@ -27,7 +27,7 @@ public class RedisTest extends AbstractTest {
 	@Test
 	public void testJedisPool() {
 		try (Jedis jedis = jedisPool.getResource()){
-			jedis.set("webull-1", "webull-1");
+			jedis.set("webull-1", "webull-1", "1000");
 			
 			String value = jedis.get("webull-1");
 			System.out.println(value);
